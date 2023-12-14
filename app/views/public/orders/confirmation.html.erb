@@ -1,0 +1,58 @@
+<h1>注文情報確認</h1>
+<table>
+<tr>
+　<th>商品名</th><th>単価(税込み)</th><th>数量</th><th>小計</th>
+　
+</tr>
+<% tortal = 0 %>
+<% @cart_items.each do |cart_item| %>
+
+<tr><td><%= cart_item.item.name %></td>
+
+<td><%= (cart_item.item.price * 1.1).floor %></td>
+
+<td><%= cart_item.amount %></td>
+
+<td><%= (cart_item.item.price * 1.1).floor * cart_item.amount %><td>
+</tr>
+
+<% tortal = tortal + (cart_item.item.price * 1.1).floor * cart_item.amount %>
+
+<% end %>
+
+</table>
+
+<table>
+    <tr>
+        <th>送料</th><th><%= @postage %></th>
+    </tr>
+    <tr><td>商品合計</td>
+    <td><%= tortal %></td>
+    </tr>
+    <tr><td>請求金額</td>
+    <td><%= tortal + @postage  %></td>
+    </tr>
+</table>
+<% tortal += @postage %>
+<h2>支払い方法</h2>
+
+<%= @order.method_payment_i18n %>
+
+<h2>お届け先</h2>
+<%= @order.shipping_postal_code %><%= @order.shipping_address %><%= @order.shipping_name %>
+
+<%= form_with model: @order,url: orders_path ,method: :post do |f| %>
+
+<%= f.hidden_field :shipping_address, :value => @order.shipping_address %>
+<%= f.hidden_field :shipping_name, :value => @order.shipping_name %>
+<%= f.hidden_field :shipping_postal_code, :value => @order.shipping_postal_code %>
+<%= f.hidden_field :customer_id, :value => current_customer.id %>
+<%= f.hidden_field :payment_amount, :value => tortal %>
+<%= f.hidden_field :postage, :value => 800 %>
+<%= f.hidden_field :method_payment, :value => @order.method_payment %>
+
+
+
+<%= f.submit '注文を確定する'%>
+
+<% end %>
