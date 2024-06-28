@@ -1,0 +1,39 @@
+<h1>注文履歴詳細</h1>
+
+<h2>購入者</h2>
+<%= @order.shipping_name %>
+<h2>注文日</h2>
+<%= @order.created_at.strftime("%Y/%m/%d %H: %M: %S") %>
+
+<h2>配送先</h2>
+<%= @order.shipping_address %>
+<h2>支払い方法</h2>
+<%= @order.method_payment %>
+
+<table>
+<tr>
+<th>商品名</th><th>単価(税込み)</th><th>数量</th><th>小計</th>
+</tr>
+<% @order_details.each do |order_detail| %>
+<tr>
+    <td><%= order_detail.item.name %></td>
+    <td><%= order_detail.tax_included_price %></td>
+    <td><%= order_detail.quantity %></td>
+    <td><%= order_detail.tax_included_price*order_detail.quantity %></td>
+</tr>
+       <% @tortal = @tortal + (order_detail.tax_included_price).floor * order_detail.quantity %>
+    <% end %>
+</table>
+
+<table>
+    <tr>
+        <td>商品合計</td><td><%= @tortal %></td>
+    </tr>
+    <tr>
+        <td>送料</td><td><%= @order.postage %></td>
+    </tr>
+    <tr>
+        
+        <td>請求金額合計</td><td><%= @tortal + @order.postage %></td>
+    </tr>
+</table>

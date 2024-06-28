@@ -8,11 +8,11 @@
 
 <% @orders.each do |order| %>
 
-<tr><td><%= order.created_at.strftime("%Y/%m/%d %H: %M: %S") %></td>
+<tr><td><%= link_to order.created_at.strftime("%Y/%m/%d %H: %M: %S") ,admin_order_path(order.id) %></td>
 
-<td><%= %></td>
+<td><%= order.shipping_name %></td>
 
-<td><%=  %></td>
+<td><%= order.order_details.sum(:quantity) %></td>
 
 <% end %>
 

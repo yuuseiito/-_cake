@@ -34,26 +34,30 @@ class Public::OrdersController < ApplicationController
         if @order.save
             
         current_customer.cart_items.each do |cart|
-        order_detail = OrderDetail.new
-        order_detail.item_id = cart.item.id
-        order_detail.tax_included_pricd = cart.item.add_tax_price
-        order_detail.order_id = @order.id
-        order_detail.quantity = cart.amount
-        order_detail.save
-        
-        redirect_to orders_conplation_path
+        OrderDetail.create!(
+            item_id: cart.item.id,
+            order_id: @order.id,
+            tax_included_price: cart.item.add_tax_price,
+            quantity: cart.amount
+            )
         
         end
-     
+        current_customer.cart_items.destroy_all
+        redirect_to orders_conplation_path
+        
         else
         render :new
         end
     end
     
     def index
+        @orders = current_customer.orders
     end
     
     def show
+        @order = Order.find(params[:id])
+        
+        @order_details = @order.order_details
     end
     
     private

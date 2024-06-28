@@ -30,7 +30,7 @@ devise_for :admin, skip: [:registrations, :passwords], controllers: {
     resources :items
     resources :customers
     get 'homes' => 'homes#top'
-    get 'orders' => 'orders#show'
+    get 'orders/:id' => 'order#show',as:"order"
   end
   
   

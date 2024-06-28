@@ -1,5 +1,3 @@
-<h1>マイページ</h1>
-<%= link_to '編集する',customers_information_edit_path %>
 <div>
     <table>
         
@@ -32,11 +30,11 @@
             <td>メールアドレス</td>
             <td><h3><%= @customer.email %></h3></td>
         </tr>
+        
+        <tr>
+            <%= link_to "編集する", edit_admin_customer_path(@customer.id) %>
+        </tr>
     </table>
-    <tr>
-        <td>注文履歴</td>
-        <td><%= link_to '一覧を見る',orders_path %></td>
-    </tr>
-    
+    <%= link_to "一覧を見る", admin_customers_path %>
     
 </div>

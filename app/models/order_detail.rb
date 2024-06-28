@@ -2,5 +2,5 @@ class OrderDetail < ApplicationRecord
     
     belongs_to :order
     
-    belongs_to :i
+    belongs_to :item
 end

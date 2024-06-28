@@ -1,0 +1,15 @@
+<h1>商品一覧</h1>
+
+<% @items.each do |item| %>
+
+<p>商品ID : <%= item.id %></p>
+
+<p>商品名: <%= link_to item.name, admin_item_path(item.id) %></p>
+
+<p>販売価格: <%= item.price %></p>
+
+<!--p>販売ステータス</p-->
+
+<% end %>
+<%= link_to '商品新規登録', new_admin_item_path %>
+<%= paginate @items %>

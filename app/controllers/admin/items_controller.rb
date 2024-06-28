@@ -14,7 +14,7 @@ class Admin::ItemsController < ApplicationController
         
         item.save!
         
-        redirect_to admin_items_path
+        redirect_to admin_item_path(item.id)
     end
     
     def show
@@ -22,6 +22,7 @@ class Admin::ItemsController < ApplicationController
     end
     
     def edit
+        @item = Item.find(params[:id])
     end
     
     def update
@@ -29,7 +30,7 @@ class Admin::ItemsController < ApplicationController
         
         @item = Item.update(item_params)
         
-        redirect_to admin_item_path
+        redirect_to admin_items_path
     end
     
     private
